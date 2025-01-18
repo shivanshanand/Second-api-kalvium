@@ -1,0 +1,137 @@
+// Boilerplate Code for HTTP Status Code API
+const express = require("express");
+const app = express();
+
+app.get("/status-info", (req, res) => {
+  let code = parseInt(req.query.code);
+  let msg;
+
+  switch (code) {
+    case 200:
+      code = 200;
+      msg =
+        "OK: The request has succeeded. The meaning of this status depends on the HTTP method used.";
+      break;
+    case 201:
+      code = 201;
+      msg =
+        "Created: The request has been fulfilled and resulted in a new resource being created.";
+      break;
+    case 204:
+      code = 204;
+      msg =
+        "No Content: The server successfully processed the request, but there is no content to return.";
+      break;
+    case 400:
+      code = 400;
+      msg =
+        "Bad Request: The server could not understand the request due to invalid syntax.";
+      break;
+    case 401:
+      code = 401;
+      msg =
+        "Unauthorized: The client must authenticate itself to get the requested response.";
+      break;
+    case 403:
+      code = 403;
+      msg =
+        "Forbidden: The server understands the request, but it refuses to authorize it.";
+      break;
+    case 404:
+      code = 404;
+      msg =
+        "Not Found: The server has not found anything matching the request URI. This is often caused by a missing page or resource.";
+      break;
+    case 405:
+      code = 405;
+      msg =
+        "Method Not Allowed: The method specified in the request is not allowed for the resource identified by the request URI.";
+      break;
+    case 429:
+      code = 429;
+      msg =
+        "Too Many Requests: The user has sent too many requests in a given amount of time (rate limiting).";
+      break;
+    case 500:
+      code = 500;
+      msg =
+        "Internal Server Error: The server has encountered a situation it doesn't know how to handle.";
+      break;
+    case 502:
+      code = 502;
+      msg =
+        "Bad Gateway: The server, while acting as a gateway or proxy, received an invalid response from the upstream server.";
+      break;
+    case 503:
+      code = 503;
+      msg =
+        "Service Unavailable: The server is not ready to handle the request, often due to being overloaded or down for maintenance.";
+      break;
+    case 504:
+      code = 504;
+      msg =
+        "Gateway Timeout: The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server.";
+      break;
+    default:
+      code = null;
+      msg = "Not a valid status code";
+  }
+
+  res.send({
+    message: msg,
+    status: code,
+  });
+});
+
+/*
+Task:
+You need to create an API that helps users understand different HTTP status codes and their meanings.
+
+Requirements:
+1. Create a GET endpoint at "/status-info".
+2. The endpoint should accept a "code" as a query parameter (e.g., /status-info?code=200).
+3. Based on the status code provided, the API should respond with:
+   a. The status code.
+   b. A description of the status code.
+
+Example Responses:
+- For 200 (OK):
+  Request: /status-info?code=200
+  Response:
+  {
+    "status": 200,
+    "message": "OK: The request has succeeded. The meaning of this status depends on the HTTP method used."
+  }
+
+- For 404 (Not Found):
+  Request: /status-info?code=404
+  Response:
+  {
+    "status": 404,
+    "message": "Not Found: The server has not found anything matching the request URI. This is often caused by a missing page or resource."
+  }
+
+- For 500 (Internal Server Error):
+  Request: /status-info?code=500
+  Response:
+  {
+    "status": 500,
+    "message": "Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request."
+  }
+
+- For 400 (Bad Request):
+  Request: /status-info?code=400
+  Response:
+  {
+    "status": 400,
+    "message": "Bad Request: The server cannot process the request due to client-side errors (e.g., malformed syntax)."
+  }
+
+List of Status Codes to Handle:
+200, 201, 204, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504
+*/
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Status Code API is running on http://localhost:${PORT}`);
+});
